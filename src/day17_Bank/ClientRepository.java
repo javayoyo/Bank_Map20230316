@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import day15_20230314_2.BoardDTO;
+
 
 public class ClientRepository {
 	private static ClientRepository repository = new ClientRepository();
@@ -45,9 +45,9 @@ public class ClientRepository {
 	
 	
 	public ClientDTO findById(String id, String password) {
-		for (ClientDTO c : cList) {
-			if (c.getId().equals(id) && c.getPassword().equals(password)) {
-				return c;
+		for (String c : cMap.keySet()) {
+			if (cMap.get(c).getId().equals(id) && cMap.get(c).getPassword().equals(password)) {
+				return cMap.get(c);
 			}
 		}
 		return null;
@@ -64,23 +64,23 @@ public class ClientRepository {
 	}
 
 	public String getAccount(String id, String password) {
-		for (ClientDTO c : cList) {
-			if (c.getId().equals(id) && c.getPassword().equals(password)) {
-				return c.getAccount();
+		for (String c : cMap.keySet()) {
+			if (cMap.get(c).getId().equals(id) && cMap.get(c).getPassword().equals(password)) {
+				return cMap.get(c).getAccount();
 			}
 		}
 		return null;
 	}
 
 	public boolean deposit(String account, long money) {
-		for (ClientDTO c : cList) {
-			if (c.getAccount().equals(account)) {
-				c.setBalance(c.getBalance() + money);
+		for (String c : cMap.keySet()) {
+			if (cMap.get(c).getAccount().equals(account)) {
+				cMap.get(c).setBalance(cMap.get(c).getBalance() + money);
 				BreakdownDTO breakdownDTO = new BreakdownDTO();
 				breakdownDTO.setAccount(account);
 				breakdownDTO.setDivision("입금");
 				breakdownDTO.setDealMoney(money);
-				breakdownDTO.setTotalMoney(c.getBalance());
+				breakdownDTO.setTotalMoney(cMap.get(c).getBalance());
 				bList.add(breakdownDTO);
 				return true;
 			}
@@ -89,15 +89,15 @@ public class ClientRepository {
 	}
 
 	public boolean withdraw(String account, long money) {
-		for (ClientDTO c : cList) {
-			if (c.getAccount().equals(account)) {
-				if (c.getBalance() >= money) {
-					c.setBalance(c.getBalance() - money);
+		for (String c : cMap.keySet()) {
+			if (cMap.get(c).getAccount().equals(account)) {
+				if (cMap.get(c).getBalance() >= money) {
+					cMap.get(c).setBalance(cMap.get(c).getBalance() - money);
 					BreakdownDTO breakdownDTO = new BreakdownDTO();
 					breakdownDTO.setAccount(account);
 					breakdownDTO.setDivision("출금");
 					breakdownDTO.setDealMoney(money);
-					breakdownDTO.setTotalMoney(c.getBalance());
+					breakdownDTO.setTotalMoney(cMap.get(c).getBalance());
 					bList.add(breakdownDTO);
 					return true;
 				} else {
@@ -109,8 +109,8 @@ public class ClientRepository {
 	}
 
 	public boolean transferCheck(String transferAccount) {
-		for (ClientDTO c : cList) {
-			if (c.getAccount().equals(transferAccount)) {
+		for (String c : cMap.keySet()) {
+			if (cMap.get(c).getAccount().equals(transferAccount)) {
 				return true;
 			}
 		}
@@ -118,9 +118,9 @@ public class ClientRepository {
 	}
 
 	public boolean update(String id, String password, String updatePassword) {
-		for (ClientDTO c : cList) {
-			if (c.getId().equals(id) && c.getPassword().equals(password)) {
-				c.setPassword(updatePassword);
+		for (String c : cMap.keySet()) {
+			if (cMap.get(c).getId().equals(id) && cMap.get(c).getPassword().equals(password)) {
+				cMap.get(c).setPassword(updatePassword);
 				return true;
 			}
 		}
@@ -128,9 +128,9 @@ public class ClientRepository {
 	}
 
 	public boolean delete(String id, String password) {
-		for (ClientDTO c : cList) {
-			if (c.getId().equals(id) && c.getPassword().equals(password)) {
-				cList.remove(c);
+		for (String c : cMap.keySet()) {
+			if (cMap.get(c).getId().equals(id) && cMap.get(c).getPassword().equals(password)) {
+				cMap.remove(c);
 				return true;
 			}
 		}

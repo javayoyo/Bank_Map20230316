@@ -1,6 +1,7 @@
 package day17_Bank;
 
 
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -74,7 +75,7 @@ public class ClientService {
 			System.out.println(clientDTO.toString());
 			System.out.println("-------------------------------------------------------");
 			
-//			List<BreakdownDTO> bList = repository.breakList(clientDTO.getAccount());
+			List<BreakdownDTO> bList = repository.breakList(clientDTO.getAccount());
 			if(bList.size() == 0) {
 				System.out.println("입출금 내역이 없습니다");
 			}else {
@@ -88,6 +89,10 @@ public class ClientService {
 			System.out.println("-------------------------------------------------------");
 		}
 	}
+	
+	
+	
+	
 	
 	
 	public void deposit() {
