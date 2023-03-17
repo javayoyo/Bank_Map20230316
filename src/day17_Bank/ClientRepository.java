@@ -19,11 +19,13 @@ public class ClientRepository {
 
 	List<BreakdownDTO> bList = new ArrayList<>();
 	Map<String, ClientDTO> cMap = new HashMap<>();
+	//ㄴ 왼변의 <>를 오른변 <> 상 내용을 생략 가능
+	// {} 중괄호의 경우, 실행문이 한 줄인경우 생략 가능
 
 	public boolean save(ClientDTO clientDTO) {
 		
-		if (cMap.put(clientDTO.getId(), clientDTO) == null) {
-			return true; // null 자체가 입력 진행이 성공이라 true 진행
+		if (cMap.put(clientDTO.getAccount(), clientDTO) == null) {
+			return true;         // null 자체가 입력 진행이 성공이라 true 진행
 		}
 		return false;
 	}
@@ -136,4 +138,18 @@ public class ClientRepository {
 		}
 		return false;
 	}
+		public boolean dupCheck(String id) {
+		boolean find = false;
+		while (true) {
+			for (String key : cMap.keySet()) {
+				if (cMap.get(key).getId().equals(id)) {
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+	
+	
+	
 }
