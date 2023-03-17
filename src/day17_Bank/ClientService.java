@@ -1,6 +1,7 @@
 package day17_Bank;
 
-import java.util.List;
+
+import java.util.Map;
 import java.util.Scanner;
 
 public class ClientService {
@@ -16,6 +17,8 @@ public class ClientService {
 	private String loginId = null;
 	private String loginPassword = null;
 	
+	
+	
 	public void save() {
 		ClientDTO clientDTO = new ClientDTO();
 		System.out.print("id> ");
@@ -30,6 +33,8 @@ public class ClientService {
 			System.out.println("회원가입실패");
 		}
 	}
+	
+	
 	public boolean loginCheck() {
 		System.out.print("id> ");
 		String id = sc.next();
@@ -46,14 +51,19 @@ public class ClientService {
 			return false;
 		}	
 	}
+	
+	
 	public void findAll() {
-		List<ClientDTO> cList = repository.findAll();
+		
+		Map<String, ClientDTO> cMap = repository.findAll();
 		System.out.println("계좌번호\t\t아이디\t비밀번호\t예금주\t잔액\t가입일");
 		System.out.println("-------------------------------------------------------");
-		for(ClientDTO c : cList) {
-			System.out.println(c.toString());
+		for(String id : cMap.keySet()) {
+			System.out.println(cMap.get(id));
 		}
 	}
+	
+	
 	public void findById() {
 		ClientDTO clientDTO = repository.findById(loginId, loginPassword);
 		if(clientDTO == null) {
@@ -63,7 +73,8 @@ public class ClientService {
 			System.out.println("-------------------------------------------------------");
 			System.out.println(clientDTO.toString());
 			System.out.println("-------------------------------------------------------");
-			List<BreakdownDTO> bList = repository.breakList(clientDTO.getAccount());
+			
+//			List<BreakdownDTO> bList = repository.breakList(clientDTO.getAccount());
 			if(bList.size() == 0) {
 				System.out.println("입출금 내역이 없습니다");
 			}else {
@@ -77,6 +88,8 @@ public class ClientService {
 			System.out.println("-------------------------------------------------------");
 		}
 	}
+	
+	
 	public void deposit() {
 		String account = repository.getAccount(loginId, loginPassword);
 		if(account == null) {
@@ -91,6 +104,8 @@ public class ClientService {
 			}
 		}
 	}
+	
+	
 	public void withdraw() {
 		String account = repository.getAccount(loginId, loginPassword);
 		if(account == null) {
@@ -105,6 +120,9 @@ public class ClientService {
 			}
 		}
 	}
+	
+	
+	
 	public void transfer() {
 		String account = repository.getAccount(loginId, loginPassword);
 		if(account == null) {
@@ -127,6 +145,8 @@ public class ClientService {
 			System.out.println("이체할 계좌번호가 없습니다");
 		}
 	}
+	
+	
 	public void update() {
 		System.out.print("비밀번호 확인> ");
 		String password = sc.next();
@@ -143,6 +163,8 @@ public class ClientService {
 			System.out.println("비밀번호가 일치하지 않습니다");
 		}
 	}
+	
+	
 	public boolean delete() {
 		if(repository.delete(loginId, loginPassword)) {
 			System.out.println("삭제성공");
@@ -152,11 +174,16 @@ public class ClientService {
 			return true;
 		}
 	}
+	
+	
 	public void logout() {
 		loginId = null;
 		loginPassword = null;
 		System.out.println("로그아웃");
 	}
+	
+	
+	
 }
 
 
