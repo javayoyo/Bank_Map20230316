@@ -48,7 +48,7 @@ public class ClientService {
 		System.out.print("password> ");
 		String password = sc.next();
 
-		if (repository.loginCheck(id, password)) {
+		if (repository.loginCheck(id, password)) { 
 			loginId = id;
 			loginPassword = password;
 			System.out.println("로그인성공");
